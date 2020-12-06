@@ -44,7 +44,6 @@ def _convertJsonToClips(json):
       "title": i["title"],
       "views": i["viewCount"],
       "duration": i["durationSeconds"],
-      "game": i["game"]["name"],
       "broadcaster": i["broadcaster"]["displayName"]
     }
 

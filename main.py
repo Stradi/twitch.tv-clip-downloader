@@ -8,7 +8,7 @@ def createFile(filename):
   if not os.path.exists(filename):
     print("{0} file not found. Creating one.".format(filename))
     file = open(filename, "w+")
-    file.write("id,slug,title,views,duration,game,broadcaster,url,isDone\n")
+    file.write("id,slug,title,views,duration,broadcaster,url,isDone\n")
     file.close()
 
 def findCurrentIDs(filename):
