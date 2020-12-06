@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import twitchDownloader as twitch
+from utils import *
 
 FILENAME = "urls.csv"
 
@@ -23,7 +24,7 @@ def removeDuplicates(filename, clips):
   for clip in clips:
     if int(clip["id"]) in currents.values:
       totalDuplicates += 1
-      print("\033[KDuplicates: {0}/{1}".format(totalDuplicates, len(clips)), end="\r")
+      print("\033[KDuplicates: " + colorize(bold("{0}/{1}"), COLOR_MAGENTA).format(totalDuplicates, len(clips)), end="\r")
       continue
 
     newArr.append(clip)
@@ -38,28 +39,28 @@ def addUrlToClips(clips):
   for idx, clip in enumerate(clips):
     clips[idx]["url"] = twitch.getClipSources(clip)[0]["url"]
     clips[idx]["isDone"] = False
-    print("\033[KAdding URLs: {0}/{1}".format(idx + 1, len(clips)), end="\r")
+    print("\033[KAdding URLs: " + colorize(bold("{0}/{1}"), COLOR_MAGENTA).format(idx + 1, len(clips)), end="\r")
   print()
 
 def main():
   createFile(FILENAME)
-  username = input("Enter a Twitch.tv username: ")
-  print("Getting clips of '{0}'.".format(username))
+  username = input("Enter a {0} username: ".format(colorize(bold("Twitch.tv"), COLOR_MAGENTA)))
+  print("Getting clips of {0}.".format(colorize(bold(username), COLOR_MAGENTA)))
   clips = twitch.getClips(username)
   if clips == None:
-    print("I think this user does not exists.")
+    print("I think this user " + colorize(bold("does not exists"), COLOR_RED))
     exit()
 
   clips = removeDuplicates(FILENAME, clips)
 
   if(len(clips) == 0):
-    print("There is no new clips I think.")
+    print("There is " + colorize(bold("no new clips"), COLOR_BLUE) + " I think.")
     print("Exiting program.")
     exit(0)
 
   addUrlToClips(clips)
   writeToFile(FILENAME, clips)
-  print("DONE. Open {0}".format(FILENAME))
+  print("DONE. Open " + colorize(bold("{0}"), COLOR_BLUE).format(FILENAME))
 
 if __name__ == "__main__":
   main()
