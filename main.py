@@ -1,5 +1,4 @@
 import os
-import codecs
 import pandas as pd
 import twitchDownloader as twitch
 
